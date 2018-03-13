@@ -63,7 +63,9 @@ rgb_thresh_lower=(160, 160, 160), rgb_thresh_upper=(255, 255, 255) #terrain defa
 obstacle_threshed = color_thresh(image, (0, 0, 0), (160, 160, 160))
 rock_threshed = color_thresh(image, (125, 100, 0), (200, 200, 75))
 ```
-The for loop started with range(2,3) to verify the code continued to work as intended. The loop was altered to run with the list [0, 2]. This was to test the obstacles next after proving the terrain still worked as intended.
+The for loop started with range(2,3) to verify the code continued to work as intended. The loop was altered to run with the list [0, 2]. This was to test the obstacles next after proving the terrain still worked as intended. With the latest code changes, both obstacles and terrain were successfully tracked. Some reservations about the quality, since the blue areas overlapped the obstacles. 
+
+The loop was then extended to iterate through the full list of items to map (terrain, obstacles and rock samples) and it did not show a rock sample on the map. New data was collected to test out the full list and showed that the colors overlapped to the extent that it impeded observing the rock sample color.
 
 ---
 ### Autonomous Navigation and Mapping

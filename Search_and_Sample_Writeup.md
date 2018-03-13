@@ -63,7 +63,7 @@ rgb_thresh_lower=(160, 160, 160), rgb_thresh_upper=(255, 255, 255) #terrain defa
 obstacle_threshed = color_thresh(image, (0, 0, 0), (160, 160, 160))
 rock_threshed = color_thresh(image, (125, 100, 0), (200, 200, 75))
 ```
-The for loop started with range(2,3) to verify the code continued to work as intended.
+The for loop started with range(2,3) to verify the code continued to work as intended. The loop was altered to run with the list [0, 2]. This was to test the obstacles next after proving the terrain still worked as intended.
 
 ---
 ### Autonomous Navigation and Mapping

@@ -36,9 +36,13 @@ This file will cover the ruberic criteria and how each are addressed.
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
 
-![alt text][image1]
+##### Obstacle Detection
+The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original test image and then the thresholds were tested with unwarped images.
+[rock_image]: ./calibration_images/example_rock1.jpg
+[terrain_thresh_image]: ./output/terrain_threshed.jpg
+[obstacle_thresh_image]: ./output/obstacle_threshed.jpg
+[rock_thresh_image]: ./output/rock_sample_threshed.jpg
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 

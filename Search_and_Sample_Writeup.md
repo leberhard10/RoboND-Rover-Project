@@ -37,12 +37,19 @@ This file will cover the ruberic criteria and how each are addressed.
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 
-##### Obstacle Detection
+Initially the functions were researched in a class notes Jupyter notebook on my local machine. Halfway through the project timeframe, the Rover_Project_Test_Notebook code was migrated to the forked project in github. [My Project](https://github.com/leberhard10/RoboND-Rover-Project)
+
+##### Obstacle and Rock Sample Detection
 The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original test image and then the thresholds were tested with unwarped images.
 [rock_image]: ./calibration_images/example_rock1.jpg
 [terrain_thresh_image]: ./output/terrain_threshed.jpg
 [obstacle_thresh_image]: ./output/obstacle_threshed.jpg
 [rock_thresh_image]: ./output/rock_sample_threshed.jpg
+
+The default range for the lower colors was missing sections of the images, so the threshold check was updated to include the specified values. This significantly improved the obstacle and sample rock detection, and slightly improved the terrain. 
+[terrain_thresh_image1]: ./output/terrain_threshed1.jpg
+[obstacle_thresh_image1]: ./output/obstacle_threshed1.jpg
+[rock_thresh_image1]: ./output/rock_sample_threshed1.jpg
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 

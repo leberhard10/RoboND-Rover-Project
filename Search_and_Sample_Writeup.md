@@ -35,8 +35,6 @@ This file will cover the ruberic criteria and how item was addressed.
 
 Initially the functions were researched in a class notes Jupyter notebook on my local machine (while working through the lessons). Halfway through the project timeframe, the Rover_Project_Test_Notebook code was migrated to this forked project in github. At the time of the file migration, the notebook was adding terrain, obstacles and rock sample colors. The colors were stuck at the starting coordinates of the video. The following notes cover the work now recorded in the forked project commits.
 
-Keeping the default sample code from the test notebook and lesson examples produced a video where the terrain would be updated in the starting point of the rover.
-
 ##### 1.1 Color Threshold Obstacle and Rock Sample Detection
 At the start, the function color_thresh() only masked pixels above a specified threshold. This worked for collecting navigable terrain, but not for obstacle or rock sample detection. The following changes were made to the default cell in the Rover_Project_Test_Notebook file:
 
@@ -51,53 +49,21 @@ The default range for the lower colors was missing sections of the images, so th
 ![obstacle_thresh_image1]: (./output/obstacle_threshed1.jpg)
 ![rock_thresh_image1]: (./output/rock_sample_threshed1.jpg)
 
-#### 2. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
+The color threshold for the sample rock was determined by using the "dropper" feature in inkscape to collect an approximate RGB range. The lesson stated that the obstacles were the opposite threshold of the terrain values.
 
-##### 2.1 Define source and destination points for perspective transform
-Working with the default values given in the Map to World Coordinates lesson. 
-```python
-bottom_offset = 6
-source = np.float32([[14, 140], [301 ,140],[200, 96], [118, 96]])
-destination = np.float32([[image.shape[1]/2 - dst_size, image.shape[0] - bottom_offset],
-                  [image.shape[1]/2 + dst_size, image.shape[0] - bottom_offset],
-                  [image.shape[1]/2 + dst_size, image.shape[0] - 2*dst_size - bottom_offset], 
-                  [image.shape[1]/2 - dst_size, image.shape[0] - 2*dst_size - bottom_offset],
-                  ])
+#### 2. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a world map.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
+
+##### 2.1 Populate the 'process_image()' TODO items with example code to track the terrain
+Using the default sample code from the test notebook and lesson examples produced a video where the terrain would be updated in the starting point of the rover. After running the code with a new set of sample data, it appeared that the default code worked as intended and the rover just traveled a short distance. It was confirmed that the longer the rover stays in an area, the more saturated the blue "terrain" pixels would be.
+
+##### 2.2 Update 'process_image()' to include obstacles and rock samples in the world map
+After the initial terrain test was verified, the variable names were updated to report the data is related to terrain tracking and additional code was added to track the obstacles in TODO 2. This looked like unnecessary copying and pasting, so a for loop was added in and the thresholds were tracked as part of an array of RGB tuples. The threshold values were pulled from the experiments in the color_thresh cell.
+``` python
+rgb_thresh_lower=(160, 160, 160), rgb_thresh_upper=(255, 255, 255) #terrain defaults in function parameters
+obstacle_threshed = color_thresh(image, (0, 0, 0), (160, 160, 160))
+rock_threshed = color_thresh(image, (125, 100, 0), (200, 200, 75))
 ```
-
-##### 2.2 Apply perspective transform
-Used the function calls provided in the Coordinate Transformations cell.
-```python
-    warped = perspect_transform(image, source, destination)   
-```
-
-##### 2.3 Apply color threshold to identify navigable terrain/obstacles/rock samples
-Started out with the function call provided in the Coordinate Transformations cell to track the terrain.
-```python
-    threshed = color_thresh(warped)
-```
-
-##### 2.4 Convert thresholded image pixel values to rover-centric coords
-Started out with the function call provided in the Coordinate Transformations cell to track the terrain.
-```python
-    xpix, ypix = rover_coords(threshed)
-```
-
-##### 2.5 Convert rover-centric pixel values to world coords
-Started out with the function call provided in the Map to World Coordinates lesson to track the terrain.
-```python
-    scale = 10
-    navigable_x_world, navigable_y_world = pix_to_world(xpix, ypix, 
-        data.xpos[data.count], data.ypos[data.count],
-        data.yaw[data.count], data.worldmap.shape[0], scale)
-
-```
-
-##### 2.6 Update worldmap (to be displayed on right side of screen)
-Uncommented the line that updates the navigable terrain.
-```python
-    data.worldmap[navigable_y_world, navigable_x_world, 2] += 1
-```
+The for loop started with range(2,3) to verify the code continued to work as intended.
 
 ---
 ### Autonomous Navigation and Mapping

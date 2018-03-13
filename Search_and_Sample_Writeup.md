@@ -32,29 +32,35 @@
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
 
-This file will cover the ruberic criteria and how each are addressed. 
+This file will cover the ruberic criteria and how item was addressed. 
 
+---
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 
-Initially the functions were researched in a class notes Jupyter notebook on my local machine. Halfway through the project timeframe, the Rover_Project_Test_Notebook code was migrated to the forked project in github. [My Project](https://github.com/leberhard10/RoboND-Rover-Project)
+Initially the functions were researched in a class notes Jupyter notebook on my local machine (while working through the lessons). Halfway through the project timeframe, the Rover_Project_Test_Notebook code was migrated to this forked project in github. At the time of the file migration, the notebook was adding terrain, obstacle and rock sample colors. The colors were stuck at the starting coordinates of the video. The following notes cover the initial work and the improvements now recorded in the forked project commits.
 
-##### Obstacle and Rock Sample Detection
-The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original test image and then the thresholds were tested with unwarped images.
-[rock_image]: ./calibration_images/example_rock1.jpg
-[terrain_thresh_image]: ./output/terrain_threshed.jpg
-[obstacle_thresh_image]: ./output/obstacle_threshed.jpg
-[rock_thresh_image]: ./output/rock_sample_threshed.jpg
+##### 1.1 Color Threshold Obstacle and Rock Sample Detection
+At the start, the function color_thresh() only masked pixels above a specified threshold. This worked for collecting navigable terrain, but not for obstacle or rock sample detection. The following changes were made to the default cell in the Rover_Project_Test_Notebook file:
 
-The default range for the lower colors was missing sections of the images, so the threshold check was updated to include the specified values. This significantly improved the obstacle and sample rock detection, and slightly improved the terrain. 
-[terrain_thresh_image1]: ./output/terrain_threshed1.jpg
-[obstacle_thresh_image1]: ./output/obstacle_threshed1.jpg
-[rock_thresh_image1]: ./output/rock_sample_threshed1.jpg
+The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original warped test image and then the thresholds were tested with unwarped images.
+![rock_image]: ./calibration_images/example_rock1.jpg
+![terrain_thresh_image]: ./output/terrain_threshed.jpg
+![obstacle_thresh_image]: ./output/obstacle_threshed.jpg
+![rock_thresh_image]: ./output/rock_sample_threshed.jpg
+
+The default range for the lower colors was missing sections of the images, so the threshold check was updated to include the specified values in the mask. This significantly improved the obstacle and sample rock detection, and slightly improved the terrain. The function was modified instead of the threshold values in order to avoid changing parameters throughout the project.
+![terrain_thresh_image1]: ./output/terrain_threshed1.jpg
+![obstacle_thresh_image1]: ./output/obstacle_threshed1.jpg
+![rock_thresh_image1]: ./output/rock_sample_threshed1.jpg
+
+##### 1.2 Process Navigable Terrain
+###### 1.2.1 Define Source and Destination Points
+
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
 
-![alt text][image2]
+---
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.

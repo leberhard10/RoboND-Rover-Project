@@ -88,6 +88,9 @@ The loop was then extended to iterate through the full list of items to map (ter
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
 
+##### 1.1 Perception Step
+Sections 1 - 3 were copied from the Rover_Project_Test_Notebook page. Step 4 assigned the generated image mask to the rover data within the for loop. Steps 5 through 7 were also copied from the notebook analysis section. The function color_thresh() was also updated to match the analysis doc as well. 
+
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
 

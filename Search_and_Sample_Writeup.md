@@ -19,35 +19,51 @@
 * Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
 * Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 
+[//]: # (Image References)
+[image_0]: ./misc/rover_image.jpg
+[image_rock]: "./calibration_images/example_rock1.jpg"
+[image_terrain_1]: ./output/terrain_threshed.jpg
+[image_obstacle_1]: ./output/obstacle_threshed.jpg
+[image_rock_sample_1]: ./output/rock_sample_threshed.jpg
+[image_terrain_2]: ./output/terrain_threshed1.jpg
+[image_obstacle_2]: ./output/obstacle_threshed1.jpg
+[image_rock_sample_2]: ./output/rock_sample_threshed1.jpg
+[image_terrain_warped]: ./output/terrain_threshed2.jpg
+[image_obstacle_warped]: ./output/obstacle_threshed2.jpg
+[image_rock_sample_warped]: ./output/rock_sample_threshed3.jpg
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 
 ---
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or PDF.  
 
-This file will cover the ruberic criteria and how item was addressed. 
+This file will cover the rubric criteria and how item was addressed. 
 
 ---
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 
-Initially the functions were researched in a class notes Jupyter notebook on my local machine (while working through the lessons). Halfway through the project timeframe, the Rover_Project_Test_Notebook code was migrated to this forked project in github. At the time of the file migration, the notebook was adding terrain, obstacles and rock sample colors. The colors were stuck at the starting coordinates of the video. The following notes cover the work now recorded in the forked project commits.
+Initially the functions were researched in a class notes Jupyter notebook on my local machine (while working through the lessons). Halfway through the project time-frame, the Rover_Project_Test_Notebook code was migrated to this forked project in github. At the time of the file migration, the notebook was adding terrain, obstacles and rock sample colors. The colors were stuck at the starting coordinates of the video. The following notes cover the work now recorded in the forked project commits.
 
 ##### 1.1 Color Threshold Obstacle and Rock Sample Detection
 At the start, the function color_thresh() only masked pixels above a specified threshold. This worked for collecting navigable terrain, but not for obstacle or rock sample detection. The following changes were made to the default cell in the Rover_Project_Test_Notebook file:
 
-The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original warped test image and then the thresholds were tested with unwarped images.
-![rock_image]: (../calibration_images/example_rock1.jpg)
-![terrain_thresh_image]: (./output/terrain_threshed.jpg)
-![obstacle_thresh_image]: (./output/obstacle_threshed.jpg)
-![rock_thresh_image]: (./output/rock_sample_threshed.jpg)
+The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original warped test image and then the thresholds were tested with normal images.
+
+![rock_image][image_rock]  ![terrain_thresh_image][image_terrain_1]  ![obstacle_thresh_image][image_obstacle_1]  ![rock_thresh_image][image_rock_sample_1]
 
 The default range for the lower colors was missing sections of the images, so the threshold check was updated to include the specified values in the mask. This significantly improved the obstacle and sample rock detection, and slightly improved the terrain. The function was modified instead of the threshold values in order to avoid changing parameters throughout the project.
-![terrain_thresh_image1]: (./output/terrain_threshed1.jpg)
-![obstacle_thresh_image1]: (./output/obstacle_threshed1.jpg)
-![rock_thresh_image1]: (./output/rock_sample_threshed1.jpg)
+
+![terrain_thresh_image][image_terrain_2]  ![obstacle_thresh_image][image_obstacle_2]  ![rock_thresh_image][image_rock_sample_2]  
+
+The world mapping appears to be missing the sample rocks, so another test was made with a warped image.
+![terrain_thresh_image][image_terrain_warped]
+![obstacle_thresh_image][image_obstacle_warped]
+![rock_thresh_image][image_rock_sample_warped]
+The 
 
 The color threshold for the sample rock was determined by using the "dropper" feature in inkscape to collect an approximate RGB range. The lesson stated that the obstacles were the opposite threshold of the terrain values.
 

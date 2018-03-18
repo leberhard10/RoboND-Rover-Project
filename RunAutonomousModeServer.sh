@@ -4,6 +4,6 @@
 . activate RoboND
 
 cd code
-python drive_rover.py
+python drive_rover.py ../auto_mode_data/
 
 read -rsp $'Press enter to continue...\n'

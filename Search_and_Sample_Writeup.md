@@ -31,6 +31,7 @@
 [image_terrain_warped]: ./output/terrain_threshed2.jpg
 [image_obstacle_warped]: ./output/obstacle_threshed2.jpg
 [image_rock_sample_warped]: ./output/rock_sample_threshed3.jpg
+[first_run]: ./output/first_auto_post_nav_update.jpg
 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
@@ -93,13 +94,15 @@ Sections 1 - 3 were copied from the Rover_Project_Test_Notebook page. Step 4 ass
 
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
+Rover Simulator Settings: 
+	Screen Resolution: 1280 x 1024
+	Graphics Quality: Fantastic
+	Select Monitor: Display 2 (Right)
+	
+The rover wasn't steering during the first autonomous mode test. It was discovered that the rover data was not updated with the rover centric terrain polar coordinates and the first run after the code change resulted in 53.1% mapped with a fidelity of 57.0% and 4 samples located. 
+![first_real_run][first_run]
 
-**Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
-
-![alt text][image3]
 
 

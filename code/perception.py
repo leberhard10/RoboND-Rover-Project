@@ -108,23 +108,26 @@ def perception_step(Rover):
        
     # 0 is obstacle data (Red)
     # 1 is rock sample data (Green)
-    # 3 is navigatable terrain data (Blue)
+    # 2 is navigatable terrain data (Blue)
+    obstacle = 0
+    rock_sample = 1
+    terrain = 2
     color_max_thresh = [(160, 160, 160), (200, 200, 75), (255, 255, 255)]
     color_min_thresh = [(0, 0, 0), (125, 100, 0), (160, 160, 160)]
     
     #track polar coordinates
     rover_polar_coords = []
     
-    for item_type in range(0, 3): 
+    for image_type in range(0, 3): 
 
         # 3) Apply color threshold to identify navigable terrain/obstacles/rock samples
-        threshed = color_thresh(warped, color_min_thresh[item_type], color_max_thresh[item_type])
+        threshed = color_thresh(warped, color_min_thresh[image_type], color_max_thresh[image_type])
         
         # 4) Update Rover.vision_image (this will be displayed on left side of screen)
             # Example: Rover.vision_image[:,:,0] = obstacle color-thresholded binary image
             #          Rover.vision_image[:,:,1] = rock_sample color-thresholded binary image
             #          Rover.vision_image[:,:,2] = navigable terrain color-thresholded binary image
-        Rover.vision_image[:,:,item_type] = threshed
+        Rover.vision_image[:,:,image_type] = threshed
         
         # 5) Convert map image pixel values to rover-centric coords
         xpix, ypix = rover_coords(threshed)
@@ -142,7 +145,7 @@ def perception_step(Rover):
             # Example: Rover.worldmap[obstacle_y_world, obstacle_x_world, 0] += 1
             #          Rover.worldmap[rock_y_world, rock_x_world, 1] += 1
             #          Rover.worldmap[navigable_y_world, navigable_x_world, 2] += 1
-        Rover.worldmap[y_world, x_world, item_type] += 1
+        Rover.worldmap[y_world, x_world, image_type] += 1
 
         # 8) Convert rover-centric pixel positions to polar coordinates
         # Update Rover pixel distances and angles
@@ -150,7 +153,6 @@ def perception_step(Rover):
             # Rover.nav_angles = rover_centric_angles
         rover_polar_coords.append(to_polar_coords(xpix, ypix))
     
- 
-    
+    Rover.nav_dist, Rover.nav_angles = rover_polar_coords[terrain]
     
     return Rover

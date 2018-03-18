@@ -32,6 +32,8 @@
 [image_obstacle_warped]: ./output/obstacle_threshed2.jpg
 [image_rock_sample_warped]: ./output/rock_sample_threshed3.jpg
 [first_run]: ./output/first_auto_post_nav_update.jpg
+[third_run]: ./output/auto_pitch_roll_3_deg.jpg
+[velocity_correction]: ./output/auto_thresh_1_vel_1.jpg
 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
@@ -54,17 +56,22 @@ At the start, the function color_thresh() only masked pixels above a specified t
 
 The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original warped test image and then the thresholds were tested with normal images.
 
-![rock_image][image_rock]  ![terrain_thresh_image][image_terrain_1]  ![obstacle_thresh_image][image_obstacle_1]  ![rock_thresh_image][image_rock_sample_1]
+![rock_image][image_rock]
+![terrain_thresh_image][image_terrain_1]
+![obstacle_thresh_image][image_obstacle_1]
+![rock_thresh_image][image_rock_sample_1]
 
 The default range for the lower colors was missing sections of the images, so the threshold check was updated to include the specified values in the mask. This significantly improved the obstacle and sample rock detection, and slightly improved the terrain. The function was modified instead of the threshold values in order to avoid changing parameters throughout the project.
 
-![terrain_thresh_image][image_terrain_2]  ![obstacle_thresh_image][image_obstacle_2]  ![rock_thresh_image][image_rock_sample_2]  
+![terrain_thresh_image][image_terrain_2]
+![obstacle_thresh_image][image_obstacle_2] 
+![rock_thresh_image][image_rock_sample_2]  
 
 The world mapping appears to be missing the sample rocks, so another test was made with a warped image.
+
 ![terrain_thresh_image][image_terrain_warped]
 ![obstacle_thresh_image][image_obstacle_warped]
 ![rock_thresh_image][image_rock_sample_warped]
-The 
 
 The color threshold for the sample rock was determined by using the "dropper" feature in inkscape to collect an approximate RGB range. The lesson stated that the obstacles were the opposite threshold of the terrain values.
 
@@ -99,8 +106,19 @@ Rover Simulator Settings:
 	Graphics Quality: Fantastic
 	Select Monitor: Display 2 (Right)
 	
-The rover wasn't steering during the first autonomous mode test. It was discovered that the rover data was not updated with the rover centric terrain polar coordinates and the first run after the code change resulted in 53.1% mapped with a fidelity of 57.0% and 4 samples located. 
+The rover wasn't steering during the first autonomous mode test. It was discovered that the rover data was not updated with the rover centric terrain polar coordinates and the first run after the code change resulted in 53.1% mapped with a fidelity of 57.0% and 4 samples located. On additional test runs with this revision, it was noticed that the rover is not avoiding obstacles in the middle of the terrain.
+
 ![first_real_run][first_run]
+
+To improve the fidelity, thresholds were added to perception_step where the image is processed if pitch and roll are within 1 degree of 0. The resulting test run showed the rover will not get relevant data if it's turns are too fast and ended up going in circles.
+
+The threshold was then changed to calculate if the pitch and roll are within 3 degrees, which resulted in a higher mapped area (albeit nauseating to watch from the abrupt steering).
+
+![third_run]
+
+Fidelity improvement was returned to 1 degree and the focus became the default parameters in drive_rover.py. Since the image processing would halt if the roll and pitch was greater than +- 1 degree, then the movement and rotation speed needed to be decreased. A significant improvement after capping the velocity at 1 meter per second. It takes twice as long to map the environment, but the fidelity appears to be staying above 60% (requirement is a fidelity of at least 60%). The longer the rover was running, the closer to 60% it became.
+
+![velocity_correction]
 
 
 

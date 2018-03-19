@@ -34,6 +34,7 @@
 [first_run]: ./output/first_auto_post_nav_update.jpg
 [third_run]: ./output/auto_pitch_roll_3_deg.jpg
 [velocity_correction]: ./output/auto_thresh_1_vel_1.jpg
+[auto_first_passing_run]: ./output/auto_first_passing_run.jpg
 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
@@ -56,7 +57,7 @@ At the start, the function color_thresh() only masked pixels above a specified t
 
 The color_thresh function was updated to support an RGB range instead of checking above a given threshold. The function was verified with the original warped test image and then the thresholds were tested with normal images.
 
-![rock_image][image_rock]
+![image_rock]
 ![terrain_thresh_image][image_terrain_1]
 ![obstacle_thresh_image][image_obstacle_1]
 ![rock_thresh_image][image_rock_sample_1]
@@ -121,9 +122,18 @@ Fidelity improvement was returned to 1 degree and the focus became the default p
 ![velocity_correction]
 
 At this point it was noticed that the analysis image was not displayed in autonomous mode. Another section was added to the Rover_Test document to duplicate the behavior and speed up debugging. It turns out that numpy will silently fail an unsafe type conversion of a float64 to a uint8. Scaled the float before calling astype and the analysis step is visible.
-Another threshold method was also added to fix the areas of the image that didn't have red, green or blue in the analysis step.
 
+After tampering with more thresholds in drive_rover.py, the robot can attain the minimum requirements. An "are we stuck" check was added when the rover kept hitting a spot where 15 degrees was not enough to dislodge from an object or a wall. Samples can be picked up if the rover runs into them with the current code.
+![auto_first_passing_run]
 
+---
+### Future Development
+
+1) Implement the wall crawling decision tree to increase mapping.
+2) Track previous areas that have been mapped.
+3) If the wall crawling is not enough to obtain all of the samples, add a step to move to the sample.
+4) Implement go_home step once all 6 samples have been obtained
+5) Research and implement a solution to speed up the rover and still maintain a high fidelity.
 
 
 

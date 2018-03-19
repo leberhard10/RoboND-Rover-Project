@@ -34,6 +34,13 @@ def decision_step(Rover):
                     Rover.brake = Rover.brake_set
                     Rover.steer = 0
                     Rover.mode = 'stop'
+            elif Rover.vel <= 0.1 and Rover.vel >= -0.1:
+                    # Stuck. Set mode to "stop" to dislodge!
+                    Rover.throttle = 0
+                    # Set brake to stored brake value
+                    Rover.brake = Rover.brake_set
+                    Rover.steer = 0
+                    Rover.mode = 'stop'
 
         # If we're already in "stop" mode then make different decisions
         elif Rover.mode == 'stop':

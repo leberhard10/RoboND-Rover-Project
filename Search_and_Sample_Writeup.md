@@ -101,7 +101,7 @@ Sections 1 - 3 were copied from the Rover_Project_Test_Notebook page. Step 4 ass
 
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
-Rover Simulator Settings: 
+Rover Simulator Settings for Roversim_x86_64: 
 	Screen Resolution: 1280 x 1024
 	Graphics Quality: Fantastic
 	Select Monitor: Display 2 (Right)
@@ -119,6 +119,9 @@ The threshold was then changed to calculate if the pitch and roll are within 3 d
 Fidelity improvement was returned to 1 degree and the focus became the default parameters in drive_rover.py. Since the image processing would halt if the roll and pitch was greater than +- 1 degree, then the movement and rotation speed needed to be decreased. A significant improvement after capping the velocity at 1 meter per second. It takes twice as long to map the environment, but the fidelity appears to be staying above 60% (requirement is a fidelity of at least 60%). The longer the rover was running, the closer to 60% it became.
 
 ![velocity_correction]
+
+At this point it was noticed that the analysis image was not displayed in autonomous mode. Another section was added to the Rover_Test document to duplicate the behavior and speed up debugging. It turns out that numpy will silently fail an unsafe type conversion of a float64 to a uint8. Scaled the float before calling astype and the analysis step is visible.
+Another threshold method was also added to fix the areas of the image that didn't have red, green or blue in the analysis step.
 
 
 

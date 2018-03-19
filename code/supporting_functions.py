@@ -146,7 +146,9 @@ def create_output_images(Rover):
       pil_img.save(buff, format="JPEG")
       encoded_string1 = base64.b64encode(buff.getvalue()).decode("utf-8")
       
-      pil_img = Image.fromarray(Rover.vision_image.astype(np.uint8))
+      # Astype will silently fail converting a float64 to unit8. Need to scale for this to map
+      type_safe = Rover.vision_image * 255
+      pil_img = Image.fromarray(type_safe.astype(np.uint8))
       buff = BytesIO()
       pil_img.save(buff, format="JPEG")
       encoded_string2 = base64.b64encode(buff.getvalue()).decode("utf-8")
